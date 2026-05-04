@@ -14,15 +14,9 @@ const getPostsSitemap = unstable_cache(
     const results = await payload.find({
       collection: 'posts',
       overrideAccess: false,
-      draft: false,
       depth: 0,
       limit: 1000,
       pagination: false,
-      where: {
-        _status: {
-          equals: 'published',
-        },
-      },
       select: {
         slug: true,
         updatedAt: true,
@@ -35,7 +29,7 @@ const getPostsSitemap = unstable_cache(
       ? results.docs
           .filter((post) => Boolean(post?.slug))
           .map((post) => ({
-            loc: `${SITE_URL}/posts/${post?.slug}`,
+            loc: `${SITE_URL}/blog/${post?.slug}`,
             lastmod: post.updatedAt || dateFallback,
           }))
       : []
